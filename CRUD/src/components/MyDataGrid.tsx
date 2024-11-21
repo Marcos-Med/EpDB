@@ -13,6 +13,7 @@ const MyDataGrid = ({ columns, rows }: IMyDataGridProps) => {
       <DataGrid
         rows={rows}
         columns={columns}
+        getRowId={(row) => row.id}
         initialState={{
           pagination: {
             paginationModel: {

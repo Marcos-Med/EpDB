@@ -1,11 +1,11 @@
 import BasePageLayout from '../../components/BasePageLayout';
-import Form from '../../components/Form';
+import FormUser from '../../components/FormUser';
 
 
 const UserEdit = () => {
   return (
-    <BasePageLayout pageTitle='Editar Usuário' labelTitle='Editar Usuário'>
-      <Form />
+    <BasePageLayout pageTitle='Editar Cliente' labelTitle='Editar Cliente'>
+      <FormUser />
     </BasePageLayout>
   );
 };
