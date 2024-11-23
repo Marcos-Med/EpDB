@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { api } from "../libs/axios";
 
-export const useUsersList = () => {
+export const useUsersList = () => { //Hook utilizado para requisitar a lista de clientes
   const [users, setUsers] = useState<any[]>([]);
 
   // Função para buscar os usuários
   const fetchUsers = async () => {
     try {
-      const { data } = await api.get("/api/users");
+      const { data } = await api.get("/api/users"); //Requisita lista de cliente
       setUsers(data.map((value: any) => ({
         ...value, 
         id: String(value.id) 
