@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 import { api } from '../libs/axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config/apiConfig';
 
 interface EditablePurchaseFormProps {
   code_product: string;
@@ -20,7 +21,7 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
-        const response = await api.get(`/api/compras/${user_Id}/${code_product}`);
+        const response = await api.get(`${API_BASE_URL}/api/compras/${user_Id}/${code_product}`);
         setProductName(response.data[0].name);
         setQuantity(response.data[0].quantity ?? 0); // Garante que quantity não seja undefined
       } catch (error) {
@@ -39,7 +40,7 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
 
     try {
       setSaving(true);
-      await api.put(`/api/compras/${user_Id}/${code_product}`, { quantity });
+      await api.put(`${API_BASE_URL}/api/compras/${user_Id}/${code_product}`, { quantity });
     } catch (error) {
       console.error('Erro ao salvar a quantidade:', error);
       alert('Erro ao salvar as alterações.');

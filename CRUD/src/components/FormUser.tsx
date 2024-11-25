@@ -13,6 +13,7 @@ import { UserSchema } from '../pages/Users/schemas/UserShema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '../pages/Users/types/User';
 import { api } from '../libs/axios';
+import { API_BASE_URL } from '../config/apiConfig';
 
 const FormUser = () => {
   console.log('Renderizou Form');
@@ -41,14 +42,14 @@ const FormUser = () => {
     console.log('Dados enviados:', data);
     if (!id) {
       // Criar um novo usuário
-      await api.post("/api/users", {
+      await api.post(`${API_BASE_URL}/api/users`, {
         name: data.name,
         cpf: data.cpf,
         phone: data.phone
       });
     } else {
       // Atualizar um usuário
-       await api.put("/api/users/" + id, {
+       await api.put(`${API_BASE_URL}/api/users/` + id, {
         name: data.name,
         cpf: data.cpf,
         phone: data.phone
@@ -64,7 +65,7 @@ const FormUser = () => {
     const fetchUser = async () => {
       try {
         console.log("Buscando usuário com ID:", id);
-        const { data } = await api.get(`/api/users/${id}`);
+        const { data } = await api.get(`${API_BASE_URL}/api/users/${id}`);
         console.log("Usuário encontrado:", data);
   
         reset({

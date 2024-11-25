@@ -13,6 +13,7 @@ import { ProdSchema } from "../pages/Users/schemas/ProdSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Prod } from "../pages/Users/types/Prod";
 import { api } from "../libs/axios";
+import { API_BASE_URL } from '../config/apiConfig';
 
 const FormProd = () => {
   console.log("Renderizou Form");
@@ -44,7 +45,7 @@ const FormProd = () => {
       // Criar um novo produto
       if (data.value >= 0) {
         try{
-         await api.post("/api/products", {
+         await api.post(`${API_BASE_URL}/api/products`, {
           name: data.name,
           value: data.value,
           code: data.code, // Adicionado barcode
@@ -62,7 +63,7 @@ const FormProd = () => {
     } else {
       // Atualizar um produto
       if (data.value >= 0) {
-        await api.put("/api/products/" + code, {
+        await api.put(`${API_BASE_URL}/api/products/` + code, {
           name: data.name,
           value: data.value,
         });
@@ -77,7 +78,7 @@ const FormProd = () => {
     const fetchProd = async () => {
       try {
         console.log("Buscando produto com code:", code);
-        const { data } = await api.get(`/api/products/${code}`);
+        const { data } = await api.get(`${API_BASE_URL}/api/products/${code}`);
         console.log("Produto encontrado:", data);
 
         reset({

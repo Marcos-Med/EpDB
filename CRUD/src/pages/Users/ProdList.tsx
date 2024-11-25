@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import BasePageProd from '../../components/BasePageProd';
 import { useProdsList } from '../../hooks/useProdsList';
 import { api } from '../../libs/axios';
+import { API_BASE_URL } from '../../config/apiConfig';
 
 const ProdList = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const ProdList = () => {
       }
   
       // Remove o usuário
-      await api.delete("/api/products/" + params.row.id);
+      await api.delete(`${API_BASE_URL}/api/products/` + params.row.id);
       console.log(`Usuário com ID ${params.row.id} removido com sucesso.`);
       fetchProds();
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material";
 import { api } from "../libs/axios";
+import { API_BASE_URL } from '../config/apiConfig';
 
 interface Prod {
   code: string;
@@ -20,7 +21,7 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await api.get("/api/products");
+        const response = await api.get(`${API_BASE_URL}/api/products`);
         setItems(response.data.map((value: any) => ({ 
           id: String(value.Codigo_de_Barras),
           code: value.Codigo_de_Barras,

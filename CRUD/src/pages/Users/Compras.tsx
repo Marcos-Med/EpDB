@@ -8,6 +8,7 @@ import { api } from "../../libs/axios";
 import { CircularProgress, Box, Typography } from "@mui/material";
 import { User } from "./types/User";
 import { Prod } from "./types/Prod";
+import { API_BASE_URL } from '../../config/apiConfig';
 
 interface Purchase {
   id: number;
@@ -35,13 +36,13 @@ const Compras = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/api/users/${id}`);
+        const response = await api.get(`${API_BASE_URL}/api/users/${id}`);
         setUser({id: response.data[0].ID,
           name: response.data[0].Nome,
           cpf: response.data[0].CPF,
           phone: response.data[0].Telefone
         });
-        const req = await api.get(`/api/products`);
+        const req = await api.get(`${API_BASE_URL}/api/products`);
         setProd(req.data.map((value: any) => ({
           id: value.Codigo_de_Barras,
           code: value.Codigo_de_Barras,
@@ -61,7 +62,7 @@ const Compras = () => {
   // Busca lista de compras do usuário
   const fetchPurchases = async () => {
     try {
-      const response = await api.get(`/api/compras/${id}`);
+      const response = await api.get(`${API_BASE_URL}/api/compras/${id}`);
       setPurchases(response.data.map((value: any) => (
        {user_id: value.fk_Cliente_ID,
         name: getName(value.fk_Produto_PET_Codigo_de_Barras, products)[0].name,
@@ -80,7 +81,7 @@ const Compras = () => {
 
   const handleAddPurchase = async (newPurchase: { code_product: string; quantidade: number }) => {
     try {
-      await api.post("/api/compras", {
+      await api.post(`${API_BASE_URL}/api/compras`, {
         ...newPurchase,
         user_id: parseInt(id || "0"),
       })
@@ -99,7 +100,7 @@ const Compras = () => {
   // Remove uma compra
   const handleDeletePurchase = async (user_Id: number, code_product: string ) => {
     try {
-      await api.delete(`/api/compras/${user_Id}/${code_product}`);
+      await api.delete(`${API_BASE_URL}/api/compras/${user_Id}/${code_product}`);
       setPurchases(purchases.filter((purchase) => purchase.code_product !== code_product));
     } catch (error) {
       console.error("Erro ao remover compra:", error);
