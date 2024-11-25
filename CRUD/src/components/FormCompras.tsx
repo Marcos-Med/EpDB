@@ -21,7 +21,11 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
     const fetchItems = async () => {
       try {
         const response = await api.get("/api/products");
-        setItems(response.data);
+        setItems(response.data.map((value: any) => ({ 
+          id: String(value.Codigo_de_Barras),
+          code: value.Codigo_de_Barras,
+          name: value.Nome,
+          value: value.Valor})));
         setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar os itens:", error);

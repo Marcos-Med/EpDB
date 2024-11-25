@@ -12,29 +12,27 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
   code_product,
   user_Id,
 }) => {
-  // Estados para armazenar as informações do produto e a quantidade
   const [productName, setProductName] = useState('');
-  const [quantity, setQuantity] = useState(0);
-  const [saving, setSaving] = useState(false); // Estado para controlar o botão de salvar
+  const [quantity, setQuantity] = useState<number | null>(null); // Usar null para indicar valor inicial indefinido
+  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
-  // Efetua a requisição ao servidor quando o componente é montado
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
         const response = await api.get(`/api/compras/${user_Id}/${code_product}`);
-        setProductName(response.data.name);
-        setQuantity(response.data.quantity);
+        setProductName(response.data[0].name);
+        setQuantity(response.data[0].quantity ?? 0); // Garante que quantity não seja undefined
       } catch (error) {
         console.error('Erro ao carregar os detalhes da compra:', error);
-      } 
+      }
     };
 
     fetchPurchaseDetails();
-  }, [user_Id, code_product]); // Recarrega os dados quando `user_Id` ou `code_product` mudarem
+  }, [user_Id, code_product]);
 
   const handleSave = async () => {
-    if (quantity <= 0) {
+    if (quantity === null || quantity <= 0) {
       alert('Quantidade deve ser maior que zero!');
       return;
     }
@@ -47,33 +45,30 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
       alert('Erro ao salvar as alterações.');
     } finally {
       setSaving(false);
-      navigate(`/compras/${user_Id}`); // Navega de volta para a página de compras após salvar
+      navigate(`/compras/${user_Id}`);
     }
   };
 
   return (
     <Box display="flex" alignItems="center" gap={2} mb={2}>
-      {/* Nome do produto */}
       <Typography variant="h6" style={{ minWidth: '200px' }}>
         {productName}
       </Typography>
 
-      {/* Caixa para editar quantidade */}
       <TextField
         type="number"
         label="Quantidade"
-        value={quantity}
+        value={quantity !== null ? quantity : ''} // Certifica-se de passar uma string quando quantity for null
         onChange={(e) => setQuantity(Number(e.target.value))}
         InputProps={{ inputProps: { min: 1 } }}
-        disabled={saving} // Desabilita a caixa enquanto está salvando
+        disabled={saving}
       />
 
-      {/* Botão de salvar */}
       <Button
         variant="contained"
         color="primary"
         onClick={handleSave}
-        disabled={saving} // Desabilita o botão enquanto está salvando
+        disabled={saving}
       >
         Salvar
       </Button>

@@ -48,8 +48,9 @@ const UserList = () => {
     {
       field: 'name',
       headerName: 'Nome',
+      width: 200,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.name.split(' ')?.shift() || ''}`
+        params.row.name
     },
     { field: 'cpf', headerName: 'CPF', width: 150 },
     { field: 'phone', headerName: 'Telefone', width: 180 },

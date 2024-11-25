@@ -15,21 +15,21 @@ const ProdList = () => {
 
   function onEdit(params: GridRenderCellParams): void {
     // se existe o id, navega para a página de edição
-    if (!params.row.code && params.row.code !== 0) return;
-    navigate(`/products/${params.row.code}`);
+    if (!params.row.id && params.row.id !== 0) return;
+    navigate(`/products/${params.row.id}`);
   }
 
   async function onDelete(params: GridRenderCellParams): Promise<void> {
     try {
       // Verifica se o ID existe antes de prosseguir
-      if (!params.row.code && params.row.code !== 0) {
+      if (!params.row.id && params.row.id !== 0) {
         console.error("ID não encontrado para exclusão.");
         return;
       }
   
       // Remove o usuário
-      await api.delete("/api/products/" + params.row.code);
-      console.log(`Usuário com ID ${params.row.code} removido com sucesso.`);
+      await api.delete("/api/products/" + params.row.id);
+      console.log(`Usuário com ID ${params.row.id} removido com sucesso.`);
       fetchProds();
 
     } catch (error) {
@@ -38,7 +38,7 @@ const ProdList = () => {
   }
 
   const columns: GridColDef<User>[] = [
-    { field: 'code', headerName: 'Código', width: 70 },
+    { field: 'id', headerName: 'Código', width: 70 },
     {
       field: 'name',
       headerName: 'Nome',

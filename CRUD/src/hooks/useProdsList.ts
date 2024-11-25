@@ -8,9 +8,11 @@ export const useProdsList = () => {
   const fetchProds = async () => {
     try {
       const { data } = await api.get("/api/products");
-      setProds(data.map((value: any) => ({
-        ...value, 
-        id: String(value.code) 
+      setProds(data.map((value: any) => ({ 
+        id: String(value.Codigo_de_Barras),
+        name: value.Nome,
+        value: value.Valor
+
       })));
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
