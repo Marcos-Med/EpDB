@@ -8,10 +8,14 @@ export const useUsersList = () => { //Hook utilizado para requisitar a lista de 
   const fetchUsers = async () => {
     try {
       const { data } = await api.get("/api/users"); //Requisita lista de cliente
+      console.log(data)
       setUsers(data.map((value: any) => ({
-        ...value, 
-        id: String(value.id) 
+        id: String(value.ID),
+        name: value.Nome,
+        cpf: value.CPF,
+        phone: value.Telefone
       })));
+      console.log(users)
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
     }

@@ -7,6 +7,7 @@ import ComprasList from "../../components/ComprasList";
 import { api } from "../../libs/axios";
 import { CircularProgress, Box, Typography } from "@mui/material";
 import { User } from "./types/User";
+import { Prod } from "./types/Prod";
 
 interface Purchase {
   id: number;
@@ -18,10 +19,15 @@ interface Purchase {
   data: string;
 }
 
+function getName(id: any, products: any): any {
+  return products.filter((v: any) => v.id == id); //Gera o nome do produto
+}
+
 const Compras = () => {
   const { id } = useParams(); // Obtém o ID da URL
   const [user, setUser] = useState<User | null>(null); // Estado para armazenar os dados do usuário
   const [purchases, setPurchases] = useState<Purchase[]>([]); // Estado para armazenar as compras do usuário
+  const [products, setProd] = useState<Prod[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Estado para controlar o carregamento
   const navigate = useNavigate();
 
@@ -30,7 +36,18 @@ const Compras = () => {
     const fetchUser = async () => {
       try {
         const response = await api.get(`/api/users/${id}`);
-        setUser(response.data);
+        setUser({id: response.data[0].ID,
+          name: response.data[0].Nome,
+          cpf: response.data[0].CPF,
+          phone: response.data[0].Telefone
+        });
+        const req = await api.get(`/api/products`);
+        setProd(req.data.map((value: any) => ({
+          id: value.Codigo_de_Barras,
+          code: value.Codigo_de_Barras,
+          name: value.Nome,
+          value: value.Valor
+        })));
       } catch (error) {
         console.error("Erro ao buscar o usuário:", error);
       } finally {
@@ -45,18 +62,28 @@ const Compras = () => {
   const fetchPurchases = async () => {
     try {
       const response = await api.get(`/api/compras/${id}`);
-      setPurchases(response.data);
+      setPurchases(response.data.map((value: any) => (
+       {user_id: value.fk_Cliente_ID,
+        name: getName(value.fk_Produto_PET_Codigo_de_Barras, products)[0].name,
+        code_product: value.fk_Produto_PET_Codigo_de_Barras,
+        id: value.fk_Produto_PET_Codigo_de_Barras,
+        quantity: value.Quantidade,
+        value: value.Valor,
+        data: value.Data }
+      )));
     } catch (error) {
       console.error("Erro ao buscar compras:", error);
     }
   };
+
+
 
   const handleAddPurchase = async (newPurchase: { code_product: string; quantidade: number }) => {
     try {
       await api.post("/api/compras", {
         ...newPurchase,
         user_id: parseInt(id || "0"),
-      });
+      })
       await fetchPurchases(); // Atualiza a lista de compras
     } catch (error) {
       console.error("Erro ao adicionar compra:", error);
@@ -73,7 +100,7 @@ const Compras = () => {
   const handleDeletePurchase = async (user_Id: number, code_product: string ) => {
     try {
       await api.delete(`/api/compras/${user_Id}/${code_product}`);
-      setPurchases((prev) => prev.filter((purchase) => (purchase.id !== user_Id) && (purchase.code_product !== code_product)));
+      setPurchases(purchases.filter((purchase) => purchase.code_product !== code_product));
     } catch (error) {
       console.error("Erro ao remover compra:", error);
       alert("Erro ao remover compra.");
@@ -82,8 +109,10 @@ const Compras = () => {
 
   // Busca compras ao carregar a página
   useEffect(() => {
-    fetchPurchases();
-  }, [id]);
+    if(!loading && products.length > 0){
+      fetchPurchases();
+    }
+  }, [loading, id]);
 
   // Exibição de carregamento
   if (loading) {

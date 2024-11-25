@@ -68,9 +68,9 @@ const FormUser = () => {
         console.log("Usuário encontrado:", data);
   
         reset({
-          name: data.name || "",
-          cpf: data.cpf || "",
-          phone: data.phone || "",
+          name: data[0].Nome || "",
+          cpf: data[0].CPF || "",
+          phone: data[0].Telefone || "",
         });
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
