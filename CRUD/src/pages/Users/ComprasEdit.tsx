@@ -17,4 +17,4 @@ const CompraEdit = () => {
     )
 }
 
-export default CompraEdit;
+export default CompraEdit; //Página de Edição de Compras

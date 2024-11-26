@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { Box, Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material";
 import { api } from "../libs/axios";
-import { API_BASE_URL } from '../config/apiConfig';
 
-interface Prod {
+interface Prod { //Parâmetros do produto
   code: string;
   name: string;
 }
 
 interface FormComprasProps {
-  onAddPurchase: (newPurchase: { code_product: string; quantidade: number }) => void;
+  onAddPurchase: (newPurchase: { code_product: string; quantidade: number }) => void; //Função de adicionar compras
 }
 
-function FormCompras({ onAddPurchase }: FormComprasProps) {
+function FormCompras({ onAddPurchase }: FormComprasProps) { //Componente de Compras
   const [items, setItems] = useState<Prod[]>([]);
   const [item, setItem] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
@@ -21,7 +20,7 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await api.get(`${API_BASE_URL}/api/products`);
+        const response = await api.get(`/api/products`); //Carrega os produtos
         setItems(response.data.map((value: any) => ({ 
           id: String(value.Codigo_de_Barras),
           code: value.Codigo_de_Barras,
@@ -44,9 +43,9 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
     const selectedProduct = items.find((prod) => prod.name === item);
     if (!selectedProduct) return alert("Produto não encontrado!");
 
-    const { code } = selectedProduct;
+    const { code } = selectedProduct; // Produto Selecionado
 
-    onAddPurchase({ code_product: code, quantidade: quantity });
+    onAddPurchase({ code_product: code, quantidade: quantity }); //Realiza compra
 
     setItem("");
     setQuantity(1);
@@ -62,7 +61,7 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
 
   return (
     <Box display="flex" gap={2} mb={2}>
-      <Select
+      <Select //Campo para selecionar produto
         value={item}
         onChange={(e) => setItem(e.target.value)}
         displayEmpty
@@ -79,7 +78,7 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
         ))}
       </Select>
 
-      <TextField
+      <TextField //Campo para quantidade
         type="number"
         label="Quantidade"
         value={quantity}
@@ -89,10 +88,10 @@ function FormCompras({ onAddPurchase }: FormComprasProps) {
       />
 
       <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Comprar
+        Comprar {/* Botão para realizar a compra */}
       </Button>
     </Box>
   );
 }
 
-export default FormCompras;
+export default FormCompras; //Retorna o formulário de compras

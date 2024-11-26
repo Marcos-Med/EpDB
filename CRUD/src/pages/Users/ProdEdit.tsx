@@ -9,4 +9,4 @@ const ProdEdit = () => {
     )
 }
 
-export default ProdEdit;
+export default ProdEdit; //Página de Editar produto

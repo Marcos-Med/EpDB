@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import BasePageLayout from '../../components/BasePageLayout';
 import { useUsersList } from '../../hooks/useUsersList';
 import { api } from '../../libs/axios';
-import { API_BASE_URL } from '../../config/apiConfig';
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ const UserList = () => {
       }
   
       // Remove o usuário
-      await api.delete(`${API_BASE_URL}/api/users/` + params.row.id);
+      await api.delete(`/api/users/` + params.row.id);
       console.log(`Usuário com ID ${params.row.id} removido com sucesso.`);
       fetchUsers();
 
@@ -44,7 +43,7 @@ const UserList = () => {
     }
   }
 
-  const columns: GridColDef<User>[] = [
+  const columns: GridColDef<User>[] = [ //Define a forma da Tabela de usuários
     { field: 'id', headerName: 'ID', width: 70 },
     {
       field: 'name',
@@ -94,4 +93,4 @@ const UserList = () => {
 
   );
 };
-export default UserList;
+export default UserList; //Retorna a página de lista de usuário

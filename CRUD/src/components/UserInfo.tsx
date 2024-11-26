@@ -8,7 +8,7 @@ interface UserInfoProps {
   profilePicture?: string; // URL da foto de perfil (opcional)
 }
 
-const UserInfo = ({ name, cpf, phone,  profilePicture }: UserInfoProps) => {
+const UserInfo = ({ name, cpf, phone,  profilePicture }: UserInfoProps) => { //Define o componente com as informações do Usuário
   return (
     <Box
       display="flex"
@@ -19,7 +19,7 @@ const UserInfo = ({ name, cpf, phone,  profilePicture }: UserInfoProps) => {
       bgcolor="background.paper"
       gap={2}
     >
-      {profilePicture ? (
+      {profilePicture ? ( //Foto de Avatar do Usuário
         <Avatar src={profilePicture} alt={`${name}'s Profile`} sx={{ width: 56, height: 56 }} />
       ) : (
         <Avatar sx={{ width: 56, height: 56 }}>

@@ -5,10 +5,10 @@ import PageTitle from './PageTitle';
 import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 
-interface IBasePageLayoutProps {
-  children: React.ReactNode
-  pageTitle: string
-  labelTitle: string
+interface IBasePageLayoutProps { //Define os parametros que a página receberá
+  children: React.ReactNode //Componente filho
+  pageTitle: string //Titulo
+  labelTitle: string //Label
 }
 
 const BasePageLayout = ({ children, pageTitle, labelTitle }: IBasePageLayoutProps) => {
@@ -38,4 +38,4 @@ const BasePageLayout = ({ children, pageTitle, labelTitle }: IBasePageLayoutProp
     </>
   );
 };
-export default BasePageLayout;
+export default BasePageLayout; //Página Base para Usuários

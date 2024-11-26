@@ -9,4 +9,4 @@ const UserEdit = () => {
     </BasePageLayout>
   );
 };
-export default UserEdit;
+export default UserEdit; //Retorna página de editar usuário

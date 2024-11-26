@@ -8,7 +8,7 @@ interface IMyBreadcrumbsProps {
   }[]
 }
 
-const MyBreadcrumbs = ({ path }: IMyBreadcrumbsProps) => {
+const MyBreadcrumbs = ({ path }: IMyBreadcrumbsProps) => { //Define o caminho tracejado em cima das lista
   return (
     <Breadcrumbs>
       <Link

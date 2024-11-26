@@ -28,4 +28,4 @@ const AppRoutes = () => {
     </Routes>
   );
 };
-export default AppRoutes;
+export default AppRoutes; //Define as rotas que levam as páginas

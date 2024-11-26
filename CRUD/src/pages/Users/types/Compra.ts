@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ComprasSchema } from '../schemas/ComprasSchema';
 
+//Define o tipo Compra
 export type Compra = {
   user_id: string
   code_product: string

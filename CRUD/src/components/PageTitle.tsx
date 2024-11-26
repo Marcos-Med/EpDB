@@ -4,7 +4,7 @@ interface IPageTitleProps {
   title: string
 }
 
-const PageTitle = ({ title }: IPageTitleProps) => {
+const PageTitle = ({ title }: IPageTitleProps) => { //Define o componente do título da página
   return (
     <Typography variant="h5">
       {title}

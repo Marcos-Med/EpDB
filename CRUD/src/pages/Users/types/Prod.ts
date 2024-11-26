@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ProdSchema } from '../schemas/ProdSchema';
 
+//Define o tipo Produto
 export type Prod = {
   code: string
   name: string

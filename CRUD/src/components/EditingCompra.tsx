@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 import { api } from '../libs/axios';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../config/apiConfig';
 
-interface EditablePurchaseFormProps {
+interface EditablePurchaseFormProps { //Recebe Código de Barras e Id_User
   code_product: string;
   user_Id: number;
 }
@@ -21,7 +20,7 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
-        const response = await api.get(`${API_BASE_URL}/api/compras/${user_Id}/${code_product}`);
+        const response = await api.get(`/api/compras/${user_Id}/${code_product}`); //Puxa os dados da compra
         setProductName(response.data[0].name);
         setQuantity(response.data[0].quantity ?? 0); // Garante que quantity não seja undefined
       } catch (error) {
@@ -32,7 +31,7 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
     fetchPurchaseDetails();
   }, [user_Id, code_product]);
 
-  const handleSave = async () => {
+  const handleSave = async () => { //Salva a edição
     if (quantity === null || quantity <= 0) {
       alert('Quantidade deve ser maior que zero!');
       return;
@@ -40,13 +39,13 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
 
     try {
       setSaving(true);
-      await api.put(`${API_BASE_URL}/api/compras/${user_Id}/${code_product}`, { quantity });
+      await api.put(`/api/compras/${user_Id}/${code_product}`, { quantity }); //Atualiza a compra
     } catch (error) {
       console.error('Erro ao salvar a quantidade:', error);
       alert('Erro ao salvar as alterações.');
     } finally {
       setSaving(false);
-      navigate(`/compras/${user_Id}`);
+      navigate(`/compras/${user_Id}`); //Volta para página anterior
     }
   };
 
@@ -56,7 +55,7 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
         {productName}
       </Typography>
 
-      <TextField
+      <TextField //Campo de Quantidade
         type="number"
         label="Quantidade"
         value={quantity !== null ? quantity : ''} // Certifica-se de passar uma string quando quantity for null
@@ -71,10 +70,10 @@ const EditablePurchaseForm: React.FC<EditablePurchaseFormProps> = ({
         onClick={handleSave}
         disabled={saving}
       >
-        Salvar
+        Salvar {/* Botão de Salvar a edição*/}
       </Button>
     </Box>
   );
 };
 
-export default EditablePurchaseForm;
+export default EditablePurchaseForm; //Devolve o componente de Edição de Compras

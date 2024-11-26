@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
 
-interface IMyDataGridProps {
+interface IMyDataGridProps { //Colunas e Linhas
   columns: GridColDef[]
   rows: GridValidRowModel[]
 }
 
-const MyDataGrid = ({ columns, rows }: IMyDataGridProps) => {
+const MyDataGrid = ({ columns, rows }: IMyDataGridProps) => { //Define a estrutura de dados da lista de Usuários
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>

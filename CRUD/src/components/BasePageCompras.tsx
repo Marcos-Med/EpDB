@@ -3,7 +3,7 @@ import PageTitle from './PageTitle';
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Importando o hook useNavigate
 
-interface IBasePageLayoutProps {
+interface IBasePageLayoutProps { //Receberá um componente e um título
   children: React.ReactNode;
   pageTitle: string;
 }
@@ -30,9 +30,9 @@ const BasePageCompras = ({ children, pageTitle }: IBasePageLayoutProps) => {
           Voltar
         </Button>
       </Stack>
-      <Paper>{children}</Paper>
+      <Paper>{children}</Paper> 
     </>
   );
 };
 
-export default BasePageCompras;
+export default BasePageCompras; //Retorna a base da página de compras

@@ -13,7 +13,6 @@ import { UserSchema } from '../pages/Users/schemas/UserShema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '../pages/Users/types/User';
 import { api } from '../libs/axios';
-import { API_BASE_URL } from '../config/apiConfig';
 
 const FormUser = () => {
   console.log('Renderizou Form');
@@ -26,12 +25,12 @@ const FormUser = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch // Adicionando reset
+    watch 
   } = useForm<User>({
     criteriaMode: 'all',
     mode: 'all',
     resolver: zodResolver(UserSchema),
-    defaultValues: {
+    defaultValues: { //Valores padrão
       phone: '',
       name: '',
       cpf: ''
@@ -42,33 +41,33 @@ const FormUser = () => {
     console.log('Dados enviados:', data);
     if (!id) {
       // Criar um novo usuário
-      await api.post(`${API_BASE_URL}/api/users`, {
+      await api.post(`/api/users`, {
         name: data.name,
         cpf: data.cpf,
         phone: data.phone
       });
     } else {
       // Atualizar um usuário
-       await api.put(`${API_BASE_URL}/api/users/` + id, {
+       await api.put(`/api/users/` + id, {
         name: data.name,
         cpf: data.cpf,
         phone: data.phone
        });
     }
 
-    navigate('/users/');
+    navigate('/users/'); //Retorna para a página anterior
   };
 
-  useEffect(() => {
+  useEffect(() => { // Carrega os dados do usuário para atualização
     if (!id) return;
   
     const fetchUser = async () => {
       try {
         console.log("Buscando usuário com ID:", id);
-        const { data } = await api.get(`${API_BASE_URL}/api/users/${id}`);
+        const { data } = await api.get(`/api/users/${id}`); //Carrega os dados
         console.log("Usuário encontrado:", data);
   
-        reset({
+        reset({ //Preenche o forms
           name: data[0].Nome || "",
           cpf: data[0].CPF || "",
           phone: data[0].Telefone || "",
@@ -91,7 +90,7 @@ const FormUser = () => {
         onSubmit={handleSubmit(onSubmit)}
         sx={{ p: 2 }}
       >
-        <TextField
+        <TextField //Campo de Nome
           label="Nome Completo"
           fullWidth
           error={!!errors.name}
@@ -104,7 +103,7 @@ const FormUser = () => {
         />
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ marginBottom: 2 }}>
-          <Controller
+          <Controller //Campo de CPF
             control={control}
             name="cpf"
             render={({ field }) => (
@@ -122,7 +121,7 @@ const FormUser = () => {
         </Stack>
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ marginBottom: 2 }}>
-          <Controller
+          <Controller //Campo de Telefone
             control={control}
             name="phone"
             render={({ field }) => (
@@ -144,7 +143,7 @@ const FormUser = () => {
             {id ? 'Atualizar Usuário' : 'Criar Usuário'}
           </Button>
           <Button component={RouterLink} to="/users">
-            Cancelar
+            Cancelar {/* Botão para cancelar a operação */}
           </Button>
         </Stack>
       </Box>
@@ -152,4 +151,4 @@ const FormUser = () => {
   );
 };
 
-export default FormUser;
+export default FormUser; //Devolve o formulário de Usuário

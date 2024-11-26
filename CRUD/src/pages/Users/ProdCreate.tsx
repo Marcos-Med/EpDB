@@ -9,4 +9,4 @@ const ProdCreate = () =>{
     )
 }
 
-export default ProdCreate;
+export default ProdCreate; //Página de criar produto (forms)

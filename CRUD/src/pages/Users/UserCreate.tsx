@@ -8,4 +8,4 @@ const UserCreate = () => {
     </BasePageLayout>
   );
 };
-export default UserCreate;
+export default UserCreate; //Retorna página de criar usuário

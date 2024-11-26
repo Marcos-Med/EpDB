@@ -5,10 +5,10 @@ import PageTitle from './PageTitle';
 import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 
-interface IBasePageLayoutProps {
-  children: React.ReactNode
-  pageTitle: string
-  labelTitle: string
+interface IBasePageLayoutProps { //Define os parametros da página
+  children: React.ReactNode //Componente filho
+  pageTitle: string //Título
+  labelTitle: string //Label
 }
 
 const BasePageProd = ({ children, pageTitle, labelTitle }: IBasePageLayoutProps) => {
@@ -28,7 +28,7 @@ const BasePageProd = ({ children, pageTitle, labelTitle }: IBasePageLayoutProps)
             variant='contained'
             startIcon={<AddShoppingCart />}  // Novo ícone específico para produto
           >
-            Novo Produto  {/* Texto ajustado para novo produto */}
+            Novo Produto 
           </Button>
         </Box>
       </Stack>
@@ -39,4 +39,4 @@ const BasePageProd = ({ children, pageTitle, labelTitle }: IBasePageLayoutProps)
   );
 };
 
-export default BasePageProd;
+export default BasePageProd; //Página base para produtos PET

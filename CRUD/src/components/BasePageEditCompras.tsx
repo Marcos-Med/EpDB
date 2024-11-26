@@ -3,12 +3,12 @@ import PageTitle from './PageTitle';
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Importando o hook useNavigate
 
-interface IBasePageLayoutProps {
+interface IBasePageLayoutProps { //Receberá um componente filho
   children: React.ReactNode;
-  pageTitle: string;
+  pageTitle: string; //Titulo da página
 }
 
-const BasePageCompras = ({ children, pageTitle }: IBasePageLayoutProps) => {
+const BasePageEditCompras = ({ children, pageTitle }: IBasePageLayoutProps) => {
   const navigate = useNavigate(); // Inicializando o hook useNavigate
 
   // Função para voltar para a página anterior
@@ -35,4 +35,4 @@ const BasePageCompras = ({ children, pageTitle }: IBasePageLayoutProps) => {
   );
 };
 
-export default BasePageCompras;
+export default BasePageEditCompras; //Retorna página de edição de compras

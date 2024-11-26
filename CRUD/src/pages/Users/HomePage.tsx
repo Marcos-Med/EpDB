@@ -30,7 +30,7 @@ const HomePage = () => {
           component={RouterLink}
           to="/users"
         >
-          Usuários
+          Usuários {/* Vai para página de usuários */}
         </Button>
         <Button
           variant="contained"
@@ -38,11 +38,11 @@ const HomePage = () => {
           component={RouterLink}
           to="/products"
         >
-          Produtos de Pets
+          Produtos de Pets {/* Vai para a página de produtos */}
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default HomePage;
+export default HomePage; //Retorna página principal

@@ -13,7 +13,6 @@ import { ProdSchema } from "../pages/Users/schemas/ProdSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Prod } from "../pages/Users/types/Prod";
 import { api } from "../libs/axios";
-import { API_BASE_URL } from '../config/apiConfig';
 
 const FormProd = () => {
   console.log("Renderizou Form");
@@ -34,7 +33,7 @@ const FormProd = () => {
     defaultValues: {
       name: "",
       value: 0,
-      code: "", // Novo campo
+      code: "", 
     },
   });
 
@@ -45,10 +44,10 @@ const FormProd = () => {
       // Criar um novo produto
       if (data.value >= 0) {
         try{
-         await api.post(`${API_BASE_URL}/api/products`, {
+         await api.post(`/api/products`, {
           name: data.name,
           value: data.value,
-          code: data.code, // Adicionado barcode
+          code: data.code, 
         });
         }
         catch(error: any){
@@ -63,7 +62,7 @@ const FormProd = () => {
     } else {
       // Atualizar um produto
       if (data.value >= 0) {
-        await api.put(`${API_BASE_URL}/api/products/` + code, {
+        await api.put(`/api/products/` + code, {
           name: data.name,
           value: data.value,
         });
@@ -72,19 +71,19 @@ const FormProd = () => {
     if(flag) navigate("/products/");
   };
 
-  useEffect(() => {
+  useEffect(() => { //Carregar os dados no forms para atualização
     if (!code) return;
 
     const fetchProd = async () => {
       try {
         console.log("Buscando produto com code:", code);
-        const { data } = await api.get(`${API_BASE_URL}/api/products/${code}`);
+        const { data } = await api.get(`/api/products/${code}`); //Carrega os dados do produto 
         console.log("Produto encontrado:", data);
 
-        reset({
+        reset({ //Armazena nos campos do forms
           name: data[0].Nome || "",
           value: data[0].Valor || 0,
-          code: data[0].Codigo_de_Barras || "", // Preencher com código de barras
+          code: data[0].Codigo_de_Barras || "", 
         });
       } catch (error) {
         console.error("Erro ao buscar produto:", error);
@@ -176,4 +175,4 @@ const FormProd = () => {
   );
 };
 
-export default FormProd;
+export default FormProd; //Retorna formulário de Produto
